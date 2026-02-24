@@ -1,0 +1,28 @@
+# @package _global_
+
+data:
+  num_batches_per_epoch: 20
+  num_batches_val_per_epoch: 100
+  batch_size: 200
+  shuffle_buffer_length: Null
+  train:
+    type: "fev"
+    split_train_val: true
+    n_pred_steps_val: 10
+    dataset_path: "autogluon/fev_datasets"
+    dataset_name: "hospital_admissions_1D"
+    horizon: 30
+    num_windows: 20
+  eval:
+    type: "fev"
+    dataset_path: "autogluon/fev_datasets"
+    dataset_name: "hospital_admissions_1D"
+    horizon: 30
+    num_windows: 20
+
+run_name: "hospital"
+
+logger:
+  mlflow:
+    experiment_name: "hospital"
+

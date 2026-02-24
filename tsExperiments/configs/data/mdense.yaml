@@ -1,0 +1,23 @@
+num_batches_per_epoch: 20
+num_batches_val_per_epoch: 100
+batch_size: 64
+shuffle_buffer_length: Null
+discard_validation: false
+
+train:
+  type: "fev"
+  split_train_val: true
+  n_pred_steps_val: 10
+  dataset_path: "autogluon/fev_datasets"
+  dataset_name: "M_DENSE_1D"
+  horizon: 30
+  num_windows: 10
+  num_feat_dynamic_real: 0
+
+eval:
+  type: "fev"
+  dataset_path: "autogluon/fev_datasets"
+  dataset_name: "M_DENSE_1D"
+  horizon: 30
+  num_windows: 10
+

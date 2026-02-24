@@ -1,0 +1,49 @@
+# configs/model/timePrism.yaml
+name: timePrism
+compute_flops: False
+compute_target_assignement: True
+plot_forecasts: True
+params:
+  # --- TimePrism Specific Params ---
+  # Total number of hypotheses (N*K). This will be overridden by train.sh
+  # The model will intelligently factorize this number into N and K.
+  num_hypotheses: 16  
+  wta_mode_params:
+    mode: "relaxed-wta"
+    epsilon: 0.01
+    temperature_ini: 1.0
+    scheduler_mode: "constant"
+    temperature_decay: 0.95
+    temperature_lim: 1.0e-8
+
+  score_loss_lambda: 1.0
+  individual: False
+  decomp_kernel_size: 7
+
+  # --- GluonTS Framework Params ---
+  num_parallel_samples: 100
+  efficient_sampling: False
+  interaction_rank: 4
+  # --- Scaling Params ---
+  scaling: True
+  scaler_type: "mean"
+  div_by_std: True
+  minimum_std: 1.0e-3
+  minimum_std_cst: 1.0e-4
+  default_scale: False
+  default_scale_cst: False
+  add_minimum_std: False
+  pick_incomplete: False
+  
+  # --- Training Params ---
+  optim_kwargs:
+    lr: 1e-3
+    weight_decay: 1e-8
+    patience: 10
+  use_dynamic_features: False
+  num_feat_dynamic_real: ${data.train.num_feat_dynamic_real}
+  embedding_dimension: 0
+
+  # --- Unused params for compatibility ---
+  dropout_rate: 0.1
+  time_features: Null
