@@ -235,11 +235,8 @@ class MeanStdScaler(Scaler):
             torch.ones_like(std),  # Default std to 1 if no observation
         )
 
-        # Where the std is truly 0, we set it to 1
-        # if self.default_scale_cst:
-        # std = torch.where(std <= self.minimum_std_cst, default_scale * torch.ones_like(std), std)
-        # else :
-        std = torch.where(std <= self.minimum_std_cst, torch.ones_like(std), std)
+        # Keep near-constant series on their original scale while avoiding division by zero.
+        std = torch.clamp(std, min=self.minimum_std_cst)
         very_small_quantile = torch.quantile(std, 0.001)
         std = torch.where(
             std <= very_small_quantile, very_small_quantile * torch.ones_like(std), std
